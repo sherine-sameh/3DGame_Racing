@@ -1,6 +1,4 @@
 package shader;
-
- 
 import java.io.*;
 import org.lwjgl.opengl.*;
 

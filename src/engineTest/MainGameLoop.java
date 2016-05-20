@@ -1,7 +1,10 @@
 package engineTest;
+import models.RawModel;
+import models.TextureModel;
 import renderEngine.*;
 import org.lwjgl.opengl.*;
 import shader.*;
+import textures.ModelTexture;
 
 public class MainGameLoop {
 	
@@ -23,12 +26,21 @@ public class MainGameLoop {
 		0,1,3,
                 3,1,2
 		};
-	RawModel model = loader.loadToVAO(vertices,indices);
-	while(!Display.isCloseRequested())
+        float[] textureCoordinates = {
+            0,0,
+            0,1,
+            1,1,
+            1,0
+        };
+	RawModel model = loader.loadToVAO(vertices,textureCoordinates,indices);
+        ModelTexture texture = new ModelTexture(loader.loadTexture("street.png"));
+        TextureModel texturedModel = new TextureModel(model,texture);
+        
+        while(!Display.isCloseRequested())
 	{
 		renderer.prepare();
                 shader.start();
-		renderer.render(model);
+		renderer.render(texturedModel);
                 shader.stop();
 		DisplayManager.updateDisplay();
 
