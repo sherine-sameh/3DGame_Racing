@@ -4,7 +4,7 @@ in vec3 position;
 in vec2 textureCoordinates;
 in vec3 normal;
 
-out vec2 pass_textureCoordinates;
+out vec2 passTextureCoordinates;
 out vec3 surfaceNormal;
 out vec3 toLightVector;
 out vec3 toCameraVector;
@@ -18,7 +18,7 @@ void main(void){
 
 	vec4 worldPosition = transformationMatrix * vec4(position,1.0);
 	gl_Position = projectionMatrix * viewMatrix * worldPosition;
-	pass_textureCoordinates = textureCoordinates;
+	passTextureCoordinates = textureCoordinates;
 	
 	surfaceNormal = (transformationMatrix * vec4(normal,0.0)).xyz;
 	toLightVector = lightPosition - worldPosition.xyz;

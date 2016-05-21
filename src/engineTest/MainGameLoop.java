@@ -27,7 +27,7 @@ public class MainGameLoop {
 			entities.add(new Entity(TreeModel, new Vector3f(random.nextFloat()*800 - 400,0,random.nextFloat() * -600),0,0,0,3));
 		}
 		
-		Light light = new Light(new Vector3f(0,0,0),new Vector3f(1,1,1));
+		Light light = new Light(new Vector3f(20000,20000,2000),new Vector3f(1,1,1));
 		
 		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("grass.png")));
 		Terrain terrain2 = new Terrain(1,0,loader,new ModelTexture(loader.loadTexture("grass.png")));
@@ -43,13 +43,13 @@ public class MainGameLoop {
 		while(!Display.isCloseRequested()){
 			camera.move();
                         renderer.processEntity(player);
-		        player.move();
-			renderer.processTerrain(terrain);
+		        renderer.processTerrain(terrain);
 			renderer.processTerrain(terrain2);
 			for(Entity entity:entities){
                             renderer.processEntity(entity);
 			}
 			renderer.render(light, camera);
+			player.move();
 			DisplayManager.updateDisplay();
 		}
 
