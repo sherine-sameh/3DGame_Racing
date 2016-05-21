@@ -7,28 +7,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import models.TextureModel;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
 import shader.StaticShader;
 
 public class MasterRenderer {
     private StaticShader shader=new StaticShader();
-    private EntityRenderer renderer ;
-    private static float FOV = 70, NEAR_PLANE = 0.1f,FAR_PLANE =1000;
-        private Matrix4f projectionMatrix;
+    private EntityRenderer renderer = new EntityRenderer(shader);
+    
     private Map<TextureModel,List<Entity>> entities = new HashMap<TextureModel,List<Entity>>();
 //    public void render(Light sun , Camera camera)
-  
-    public MasterRenderer (){
-    GL11.glEnable(GL11.GL_CULL_FACE);
-    GL11.glCullFace(GL11.GL_BACK);
-    createProjectionMatrix();
-   renderer = new EntityRenderer(shader,projectionMatrix ) ;
-    }
-    
     public void render(Camera camera){
-  prepare();
+    renderer.prepare();
     shader.start();
 //    shafer.loadLight(sun);
     shader.loadViewMatrix(camera);
@@ -54,26 +42,4 @@ public class MasterRenderer {
     {
         shader.cleanUp();
     }
-
-public void prepare(){
-                GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glClearColor(1,0,0,1);
-	}
-
-        private void createProjectionMatrix()
-        {
-            float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
-            float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))) * aspectRatio);
-            float x_scale = y_scale / aspectRatio;
-            float frustum_length = FAR_PLANE - NEAR_PLANE;
-
-            projectionMatrix = new Matrix4f();
-            projectionMatrix.m00 = x_scale;
-            projectionMatrix.m11 = y_scale;
-            projectionMatrix.m22 = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
-            projectionMatrix.m23 = -1;
-            projectionMatrix.m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
-            projectionMatrix.m33 = 0;
-        }
 }

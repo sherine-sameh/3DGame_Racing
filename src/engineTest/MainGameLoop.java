@@ -1,5 +1,4 @@
 package engineTest;
-import Terrain.Terrain;
 import entities.Camera;
 import entities.Entity;
 import entities.Player;
@@ -23,11 +22,9 @@ public class MainGameLoop {
 	RawModel model = ObjLoader.loadObjModel("dragon.obj", loader);
         ModelTexture texture = new ModelTexture(loader.loadTexture("car.png"));
         TextureModel texturedModel = new TextureModel(model,texture);
-         Player player = new Player(texturedModel,new Vector3f(0,0,0),0,0,0,1);        
-         //renderer = new EntityRenderer(shader);
+         Player player = new Player(texturedModel,new Vector3f(0,0,-5),0,0,0,1);        
         Camera camera = new Camera();
-        Terrain terrain = new Terrain (0,0,loader , new ModelTexture(loader.loadTexture("grass")));
-        Terrain terrain2 = new Terrain (1,0,loader , new ModelTexture(loader.loadTexture("grass")));
+        
         List<Entity> allEntities = new ArrayList<Entity>();
         
         Random random = new Random();
@@ -42,14 +39,10 @@ public class MainGameLoop {
         while(!Display.isCloseRequested())
 	{
                 camera.move();
-                player.move();
-                
-                   renderer.processTerrain(terrain);
-                   renderer.processTerrain(terrain2);
                 for (Entity entity:allEntities)
                 {
                     renderer.processEntity(entity);
-                    renderer.processEntity(player);
+                    entity.incrementAngle(1,1,0);
 		
                 }
                 renderer.render(camera);
