@@ -1,10 +1,6 @@
 package engineTest;
 import entities.Camera;
 import entities.Entity;
-import entities.Player;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import models.RawModel;
 import models.TextureModel;
 import renderEngine.*;
@@ -16,45 +12,110 @@ import textures.ModelTexture;
 public class MainGameLoop {
 	
 	public static void main(String[] args)
-	{DisplayManager.createDisplay();
+	{
+	DisplayManager.createDisplay();
 	Loader loader = new Loader();
-	
-	RawModel model = ObjLoader.loadObjModel("dragon.obj", loader);
-        ModelTexture texture = new ModelTexture(loader.loadTexture("car.png"));
+	StaticShader shader =new StaticShader();
+        Renderer renderer = new Renderer(shader);
+        float[] vertices = {			
+				-0.5f,0.5f,-0.5f,	
+				-0.5f,-0.5f,-0.5f,	
+				0.5f,-0.5f,-0.5f,	
+				0.5f,0.5f,-0.5f,		
+				
+				-0.5f,0.5f,0.5f,	
+				-0.5f,-0.5f,0.5f,	
+				0.5f,-0.5f,0.5f,	
+				0.5f,0.5f,0.5f,
+				
+				0.5f,0.5f,-0.5f,	
+				0.5f,-0.5f,-0.5f,	
+				0.5f,-0.5f,0.5f,	
+				0.5f,0.5f,0.5f,
+				
+				-0.5f,0.5f,-0.5f,	
+				-0.5f,-0.5f,-0.5f,	
+				-0.5f,-0.5f,0.5f,	
+				-0.5f,0.5f,0.5f,
+				
+				-0.5f,0.5f,0.5f,
+				-0.5f,0.5f,-0.5f,
+				0.5f,0.5f,-0.5f,
+				0.5f,0.5f,0.5f,
+				
+				-0.5f,-0.5f,0.5f,
+				-0.5f,-0.5f,-0.5f,
+				0.5f,-0.5f,-0.5f,
+				0.5f,-0.5f,0.5f
+				
+		};
+		
+		float[] textureCoordinates = {
+				
+				0,0,
+				0,1,
+				1,1,
+				1,0,			
+				0,0,
+				0,1,
+				1,1,
+				1,0,			
+				0,0,
+				0,1,
+				1,1,
+				1,0,
+				0,0,
+				0,1,
+				1,1,
+				1,0,
+				0,0,
+				0,1,
+				1,1,
+				1,0,
+				0,0,
+				0,1,
+				1,1,
+				1,0
+
+				
+		};
+		
+		int[] indices = {
+				0,1,3,	
+				3,1,2,	
+				4,5,7,
+				7,5,6,
+				8,9,11,
+				11,9,10,
+				12,13,15,
+				15,13,14,	
+				16,17,19,
+				19,17,18,
+				20,21,23,
+				23,21,22
+
+		};
+	RawModel model = loader.loadToVAO(vertices,textureCoordinates,indices);
+        ModelTexture texture = new ModelTexture(loader.loadTexture("street.png"));
         TextureModel texturedModel = new TextureModel(model,texture);
-         Player player = new Player(texturedModel,new Vector3f(0,0,-5),0,0,0,1);        
+        Entity entity = new Entity(texturedModel,new Vector3f(0,0,-5),0,0,0,1);
         Camera camera = new Camera();
         
-        List<Entity> allEntities = new ArrayList<Entity>();
-        
-        Random random = new Random();
-        for (int i = 0; i < 10; i++) {
-            float x = random.nextFloat()*100 ;
-            float y = random.nextFloat()*100 ;
-            float z = random.nextFloat()*-300;
-            allEntities.add(new Entity(texturedModel, new Vector3f(x,y,z),random.nextFloat()*180f,random.nextFloat()*180f,0f,1f));
-            
-        }
-        MasterRenderer renderer = new MasterRenderer();
         while(!Display.isCloseRequested())
 	{
-                camera.move();
-                for (Entity entity:allEntities)
-                {
-                    renderer.processEntity(entity);
-                    entity.incrementAngle(1,1,0);
-		
-                }
-                renderer.render(camera);
+                entity.incrementAngle(1,1,0);
+		camera.move();
+                renderer.prepare();
+                shader.start();
+                shader.loadViewMatrix(camera);
+		renderer.render(entity,shader);
+                shader.stop();
 		DisplayManager.updateDisplay();
 
         }
-        renderer.cleanUp();
-        loader.cleanUp();
+        shader.cleanUp();
+	loader.cleanUp();
+	
 	DisplayManager.closeDisplay();
 	}
 }
-
-	
-        
-        
