@@ -13,25 +13,27 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.opengl.*;
 
-public class Loader {
+public class Loader 
+{
 	private List<Integer> vaos = new ArrayList<Integer>();
 	private List<Integer> vbos = new ArrayList<Integer>();
 	private List<Integer> textures = new ArrayList<Integer>();
-	
-        public RawModel loadToVAO(float[] positions ,float[] textureCoordinates, int[]indices)
+
+        public RawModel loadToVAO(float[] positions ,float[] textureCoordinates,float[] normals, int[]indices)
 	{
 		int vaoID = createVAO();
 		bindIndicesBuffer(indices);
 		storeDataInListAttribute(0,3,positions);
         	storeDataInListAttribute(1,2,textureCoordinates);
-		unbindVAO();
+                storeDataInListAttribute(2,3,normals);
+                unbindVAO();
 		return new RawModel(vaoID , indices.length);
 	}
         public int loadTexture (String fileName)
         {
             Texture texture = null;
             try {
-                texture = TextureLoader.getTexture("PNG",new FileInputStream("resources/"+fileName));
+                texture = TextureLoader.getTexture("PNG",new FileInputStream("assests/"+fileName));
             } catch (IOException ex) {
                 Logger.getLogger(Loader.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -48,6 +50,7 @@ public class Loader {
 			GL15.glDeleteBuffers(vbo);
                 for(int texture :textures)
                         GL11.glDeleteTextures(texture);
+                
 	}
 	private int createVAO(){
 		int vaoID = GL30.glGenVertexArrays();

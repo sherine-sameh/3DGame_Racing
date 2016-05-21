@@ -1,15 +1,15 @@
 package entities;
 
-import models.TextureModel;
+import models.TexturedModel;
 import org.lwjgl.util.vector.*;
 
 public class Entity {
-    private TextureModel model;
+    private TexturedModel model;
     private Vector3f position;
     private float rotX,rotY,rotZ;
     private float scale;
     
-    public Entity(TextureModel model , Vector3f position, float rotX,float rotY, float rotZ, float scale)
+    public Entity(TexturedModel model , Vector3f position, float rotX,float rotY, float rotZ, float scale)
     {
         this.model = model;
         this.position = position;
@@ -33,7 +33,7 @@ public class Entity {
                 
     }
 
-    public TextureModel getModel() {
+    public TexturedModel getModel() {
         return model;
     }
 
@@ -56,5 +56,30 @@ public class Entity {
     public float getScale() {
         return scale;
     }
+
+    public void setModel(TexturedModel model) {
+        this.model = model;
+    }
+
+    public void setPosition(Vector3f position) {
+        this.position = position;
+    }
+
+    public void setRotX(float rotX) {
+        this.rotX = rotX;
+    }
+
+    public void setRotY(float rotY) {
+        this.rotY = rotY;
+    }
+
+    public void setRotZ(float rotZ) {
+        this.rotZ = rotZ;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+    
 
 }

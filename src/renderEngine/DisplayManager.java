@@ -7,11 +7,11 @@ public class DisplayManager {
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private static final int FPS_CAP = 120;
-        private static long LastFrameTime;
-        private static float delta ; 
+	
+        private static long lastFrameTime;
+        private static float delta;
         
-        
-	public static void createDisplay()
+        public static void createDisplay()
 	{
 		
 		ContextAttribs attribs = new ContextAttribs(3,2).withForwardCompatible(true).withProfileCore(true);
@@ -19,33 +19,31 @@ public class DisplayManager {
 			Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT));
 			Display.create(new PixelFormat(),attribs);
 			Display.setTitle("3D GAME");
-		}
-                catch (LWJGLException e) {
+		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
-                LastFrameTime = getCurrentTime();
-
-        }
+                lastFrameTime = getCurrentTime();
+	}
 	public static void updateDisplay()
 	{
 		Display.sync(FPS_CAP);
 		Display.update();
-                long CurrentFrameTime = getCurrentTime();
-                delta =  (CurrentFrameTime - LastFrameTime)/1000f;
-	        LastFrameTime =CurrentFrameTime ;
+                
+                long currentFrameTime = getCurrentTime();
+                delta = (currentFrameTime - lastFrameTime)/1000f;
+                lastFrameTime = currentFrameTime;
         }
-        
-        public static float getFrameTimeSeconds(){
-        return delta;
+        public static float getFrameTimeSeconds()
+        {
+            return delta;
         }
 	public static void closeDisplay()
 	{
 		Display.destroy();
-       
 	}
-        public static long getCurrentTime(){
-        return (Sys.getTime()*1000)/Sys.getTimerResolution();
+        private static long getCurrentTime()
+        {
+            return Sys.getTime()*1000/Sys.getTimerResolution();
         }
-        
 }

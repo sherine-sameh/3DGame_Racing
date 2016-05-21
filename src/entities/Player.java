@@ -1,6 +1,6 @@
 package entities;
 
-import models.TextureModel;
+import models.TexturedModel;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
@@ -12,7 +12,7 @@ public class Player extends Entity {
     private float currentSpeed = 0; 
     private float currentTurnSpeed = 0; 
     int i =0 ;
-    public Player(TextureModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+    public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
         super(model, position, rotX, rotY, rotZ, scale);
     }
     

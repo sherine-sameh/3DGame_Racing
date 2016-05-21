@@ -1,6 +1,4 @@
 package renderEngine;
-
-
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
@@ -12,7 +10,7 @@ public class ObjLoader {
     {
         FileReader reader = null;
         try {
-            reader = new FileReader("resources/"+fileName);
+            reader = new FileReader("assests/"+fileName);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ObjLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -79,6 +77,7 @@ public class ObjLoader {
         }
         verticesArray = new float[vertices.size()*3];
         indicesArray = new int[indices.size()];
+        
         int vertexPointer = 0;
         for(Vector3f vertex:vertices)
             {
@@ -89,7 +88,7 @@ public class ObjLoader {
         for(int i=0;i<indices.size();i++)
                 indicesArray[i]=indices.get(i);
             
-        return loader.loadToVAO(verticesArray, textureArray, indicesArray);
+        return loader.loadToVAO(verticesArray, textureArray,normalsArray, indicesArray);
             
     }
     private static void processVertex(String[]vertexData,List<Integer> indices , List<Vector2f>textures , List<Vector3f>normals,float[] textureArray, float[]normalsArray)
@@ -103,8 +102,5 @@ public class ObjLoader {
         normalsArray[currentVertexPointer*3] = currentNorm.x;
         normalsArray[currentVertexPointer*3+1] = currentNorm.y;
         normalsArray[currentVertexPointer*3+2] = currentNorm.z;
-        
     }
-    
-    
 }
