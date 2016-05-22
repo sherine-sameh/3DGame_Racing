@@ -19,8 +19,8 @@ public class MainGameLoop {
 		Loader loader = new Loader();
 		
 		
-		RawModel TreeRawModel = ObjLoader.loadObjModel("tree.obj", loader);
-		TexturedModel TreeModel = new TexturedModel(TreeRawModel,new ModelTexture(loader.loadTexture("tree.png")));
+		RawModel TreeRawModel = ObjLoader.loadObjModel("tree_.obj", loader);
+		TexturedModel TreeModel = new TexturedModel(TreeRawModel,new ModelTexture(loader.loadTexture("tree_.png")));
 		List<Entity> entities = new ArrayList<Entity>();
 		Random random = new Random();
 		for(int i=0;i<500;i++){
@@ -33,24 +33,25 @@ public class MainGameLoop {
 		Terrain terrain2 = new Terrain(1,0,loader,new ModelTexture(loader.loadTexture("grass.png")));
 		
                 
-		RawModel model = ObjLoader.loadObjModel("bunny.obj", loader);
-		TexturedModel texturedModel = new TexturedModel(model,new ModelTexture(loader.loadTexture("white.png")));
-		Player player = new Player(texturedModel,new Vector3f(0,0,-300),0,0,0,3);        
+		RawModel model = ObjLoader.loadObjModel("Porsche.obj", loader);
+		TexturedModel texturedModel = new TexturedModel(model,new ModelTexture(loader.loadTexture("Porsche_.png")));
+		Player player = new Player(texturedModel,new Vector3f(0,0.8f,-50),0,0,0,1);        
          
 		Camera camera = new Camera();	
 		MasterRenderer renderer = new MasterRenderer();
 		
 		while(!Display.isCloseRequested()){
-			camera.move();
-                        renderer.processEntity(player);
+			renderer.processEntity(player);
 		        renderer.processTerrain(terrain);
 			renderer.processTerrain(terrain2);
 			for(Entity entity:entities){
                             renderer.processEntity(entity);
 			}
 			renderer.render(light, camera);
-			player.move();
-			DisplayManager.updateDisplay();
+			camera.move();
+                        player.move();
+			
+                        DisplayManager.updateDisplay();
 		}
 
 		renderer.cleanUp();
