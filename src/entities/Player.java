@@ -49,31 +49,5 @@ public class Player extends Entity {
     }
     }
    
-//    public void move (){
-//    checkInputs();
-//    super.incrementAngle(0,currentTurnSpeed * DisplayManager.getFrameTimeSeconds(),0 );
-//    float distance = currentSpeed*DisplayManager.getFrameTimeSeconds();
-//    float dx = (float) (distance * Math.sin(Math.toRadians(super.getRotY())));
-//    float dz = (float) (distance * Math.cos(Math.toRadians(super.getRotY())));
-//    super.incrementPosition(dx, 0, dz);
-//    }
- 
-    //currentTurnSpeed * DisplayManager.getFrameTimeSeconds()
-//    public void checkInputs (){
-//    if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
-//    this.currentSpeed=RUN_SPEED;
-//    }
-//    else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-//    this.currentSpeed= -RUN_SPEED;
-//    }
-//    else currentSpeed=0;
-//     if (Keyboard.isKeyDown(Keyboard.KEY_UP )){
-//    this.currentTurnSpeed= -TURN_SPEED;
-//    }
-//    else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
-//    this.currentTurnSpeed=  TURN_SPEED;
-//    }
-//    else currentTurnSpeed=0;
-//}
     
 }
